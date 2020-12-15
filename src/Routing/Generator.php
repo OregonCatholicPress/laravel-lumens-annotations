@@ -103,7 +103,7 @@ class Generator
                 // middleware option
                 if (! empty($routeMetadata['middleware'])) {
                     if (is_array($routeMetadata['middleware'])) {
-                        $flat = array_flatten($routeMetadata['middleware']);
+                        $flat = $this::array_flatten($routeMetadata['middleware']);
                         $middleware = "['".implode("', '",$flat)."']";
                     } else {
                         $middleware = "'".$routeMetadata['middleware']."'";
@@ -129,7 +129,7 @@ class Generator
         $result = array(); 
         foreach ($array as $key => $value) { 
             if (is_array($value)) { 
-                $result = array_merge($result, array_flatten($value)); 
+                $result = array_merge($result, $this::array_flatten($value)); 
             } else { 
                 $result = array_merge($result, array($key => $value));
             } 
