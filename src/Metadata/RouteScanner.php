@@ -4,6 +4,7 @@ namespace ProAI\Annotations\Metadata;
 
 use ReflectionClass;
 use Doctrine\Common\Annotations\AnnotationReader;
+use Illuminate\Support\Str;
 
 class RouteScanner
 {
@@ -117,7 +118,7 @@ class RouteScanner
             // controller method is resource route
             if (! empty($resource) && in_array($name, $resource['methods'])) {
                 $routeMetadata = [
-                    'uri' => $resource['name'].$this->getResourcePath($name),
+                    'uri' => $resource['name'].$this->getResourcePath($name, $resource['name']),
                     'controller' => $class,
                     'controllerMethod' => $name,
                     'httpMethod' => $this->getResourceHttpMethod($name),
@@ -208,15 +209,19 @@ class RouteScanner
      * @param string $method
      * @return string
      */
-    protected function getResourcePath($method)
+    protected function getResourcePath($method, $name)
     {
+        $name = preg_replace('/.*\/([^\/]*)$/', '$1', $name);
+        $name = Str::singular($name);
+        $name = preg_replace_callback('/[-_](\w)/', function($matches) { return strtoupper($matches[1]); }, $name);
+        $id = $name . "Id";
         $resourcePaths = [
             'index' => '',
             'create' => 'create',
             'store' => '',
-            'show' => '/{id}',
-            'edit' => '/{id}/edit',
-            'update' => '/{id}',
+            'show' => '/{'.$id.'}',
+            'edit' => '/{'.$id.'}/edit',
+            'update' => '/{'.$id.'}',
             'destroy' => '/{id}'
         ];
 
@@ -238,7 +243,7 @@ class RouteScanner
           $as         = (! empty($annotation->as))          ? $annotation->as : '';
           $middleware = (! empty($annotation->middleware))  ? $annotation->middleware : '';
 
-          $uri = (empty($annotation->value)) ? str_replace("_", "-", snake_case($name)) : $annotation->value;
+          $uri = (empty($annotation->value)) ? str_replace("_", "-", Str::snake($name)) : $annotation->value;
           return [
                   'uri' => $uri,
                   'httpMethod' => $httpMethod,
