@@ -4,12 +4,25 @@
     "keywords": ["laravel","lumen","route","routes","router","annotations","event","event binding"],
     "license": "MIT",
     "require": {
-        "php": ">=5.5.9",
+        "php": "^8.1.0",
         "doctrine/annotations": "~1.2"
     },
     "autoload": {
         "psr-4": {
             "ProAI\\Annotations\\": "src/"
         }
+    },
+    "scripts": {
+        "code-standards": [
+            "@syntax-check",
+            "@copy-paste",
+            "@mess-detector",
+            "@cs-fixer"
+        ],
+        "paratest": "@php vendor/bin/paratest -p24 -f",
+        "syntax-check": "@php vendor/bin/parallel-lint src",
+        "mess-detector": "@php vendor/bin/phpmd src/Models text phpmd.xml",
+        "cs-fixer": "@php vendor/bin/php-cs-fixer fix --dry-run",
+        "copy-paste": "@php vendor/bin/phpcpd --min-tokens=50 src --exclude=src/database"
     }
 }
