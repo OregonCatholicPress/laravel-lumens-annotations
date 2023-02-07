@@ -2,9 +2,9 @@
 
 namespace ProAI\Annotations\Metadata;
 
-use ReflectionClass;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Illuminate\Support\Str;
+use ReflectionClass;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -21,7 +21,7 @@ class RouteScanner
      */
     public function __construct(AnnotationReader $reader)
     {
-        $this->reader = $reader; 
+        $this->reader = $reader;
         // OA namespace is for swagger annotations. We want to ignore those.
         $this->reader->addGlobalIgnoredNamespace("OA");
     }
@@ -89,8 +89,7 @@ class RouteScanner
                 $resourceMethods = ['index', 'create', 'store', 'show', 'edit', 'update', 'destroy'];
                 if (! empty($annotation->only)) {
                     $resourceMethods = array_intersect($resourceMethods, $annotation->only);
-                }
-                elseif (! empty($annotation->except)) {
+                } elseif (! empty($annotation->except)) {
                     $resourceMethods = array_diff($resourceMethods, $annotation->except);
                 }
                 $resource = [
@@ -99,7 +98,7 @@ class RouteScanner
                 ];
             }
         }
-        
+
         // find routes
         foreach ($reflectionClass->getMethods() as $reflectionMethod) {
             $name = $reflectionMethod->getName();
@@ -109,11 +108,11 @@ class RouteScanner
             // controller method is resource route
             if (! empty($resource) && in_array($name, $resource['methods'])) {
                 $routeMetadata = [
-                    'uri' => $resource['name'].$this->getResourcePath($name, $resource['name']),
+                    'uri' => $resource['name'] . $this->getResourcePath($name, $resource['name']),
                     'controller' => $class,
                     'controllerMethod' => $name,
                     'httpMethod' => $this->getResourceHttpMethod($name),
-                    'as' => $resource['name'].'.'.$name,
+                    'as' => $resource['name'] . '.' . $name,
                     'middleware' => ''
                 ];
             }
@@ -122,7 +121,7 @@ class RouteScanner
             $routes = $this->hasHttpMethodAnnotation($name, $methodAnnotations);
             if ($routes) {
                 $routeMetadata = [];
-                foreach($routes as $route) {
+                foreach ($routes as $route) {
                     $routeMetadata[] = [
                         'uri' => $route['uri'],
                         'controller' => $class,
@@ -135,7 +134,7 @@ class RouteScanner
             }
 
             // add more route options to route metadata
-            if (! empty($routeMetadata)) {  
+            if (! empty($routeMetadata)) {
                 if (!isset($routeMetadata[0])) {
                     $temp =  [];
                     $temp[] = $routeMetadata;
@@ -144,7 +143,7 @@ class RouteScanner
                     $routeMetadatas  = $routeMetadata;
                 }
                 $idx = 0;
-                foreach($routeMetadatas as $routeMetadata) {
+                foreach ($routeMetadatas as $routeMetadata) {
                     $idx++;
 
                     // add other method annotations
@@ -161,16 +160,17 @@ class RouteScanner
 
                     // add global prefix and middleware
                     if (! empty($prefix)) {
-                        $routeMetadata['uri'] = $prefix.'/'.$routeMetadata['uri'];
+                        $routeMetadata['uri'] = $prefix . '/' . $routeMetadata['uri'];
                     }
                     if (! empty($middleware) && empty($routeMetadata['middleware'])) {
                         $routeMetadata['middleware'] = $middleware;
                     }
 
-                    $controllerMetadata[$name.$idx] = $routeMetadata;
+                    $controllerMetadata[$name . $idx] = $routeMetadata;
                 }
             }
         }
+
         return $controllerMetadata;
     }
 
@@ -199,15 +199,15 @@ class RouteScanner
     {
         $name = preg_replace('/.*\/([^\/]*)$/', '$1', $name);
         $name = Str::singular($name);
-        $name = preg_replace_callback('/[-_](\w)/', function($matches) { return strtoupper($matches[1]); }, $name);
+        $name = preg_replace_callback('/[-_](\w)/', function ($matches) { return strtoupper($matches[1]); }, $name);
         $idd = $name . "Id";
         $resourcePaths = [
             'index' => '',
             'create' => 'create',
             'store' => '',
-            'show' => '/{'.$idd.'}',
-            'edit' => '/{'.$idd.'}/edit',
-            'update' => '/{'.$idd.'}',
+            'show' => '/{' . $idd . '}',
+            'edit' => '/{' . $idd . '}/edit',
+            'update' => '/{' . $idd . '}',
             'destroy' => '/{id}'
         ];
 
@@ -224,8 +224,8 @@ class RouteScanner
     {
         $parseAnnotation = function ($httpMethod, $annotation) {
             // options
-            $ass         = (! empty($annotation->as))          ? $annotation->as : '';
-            $middleware = (! empty($annotation->middleware))  ? $annotation->middleware : '';
+            $ass         = (! empty($annotation->as)) ? $annotation->as : '';
+            $middleware = (! empty($annotation->middleware)) ? $annotation->middleware : '';
             $uri = (empty($annotation->value)) ? str_replace("_", "-", Str::snake($name)) : $annotation->value;
 
             return [
@@ -241,40 +241,39 @@ class RouteScanner
             // check for http method annotation
             if ($annotation instanceof \ProAI\Annotations\Annotations\Get) {
                 $httpMethod = 'GET';
-                $return[] = $parseAnnotation($httpMethod,$annotation);
+                $return[] = $parseAnnotation($httpMethod, $annotation);
            //     break;
             }
             if ($annotation instanceof \ProAI\Annotations\Annotations\Post) {
                 $httpMethod = 'POST';
-                $return[] = $parseAnnotation($httpMethod,$annotation);
+                $return[] = $parseAnnotation($httpMethod, $annotation);
                 //break;
             }
             if ($annotation instanceof \ProAI\Annotations\Annotations\Options) {
                 $httpMethod = 'OPTIONS';
-                $return[] = $parseAnnotation($httpMethod,$annotation);
-               // break;
+                $return[] = $parseAnnotation($httpMethod, $annotation);
+                // break;
             }
             if ($annotation instanceof \ProAI\Annotations\Annotations\Put) {
                 $httpMethod = 'PUT';
-                $return[] = $parseAnnotation($httpMethod,$annotation);
+                $return[] = $parseAnnotation($httpMethod, $annotation);
                 //break;
             }
             if ($annotation instanceof \ProAI\Annotations\Annotations\Patch) {
                 $httpMethod = 'PATCH';
-                $return[] = $parseAnnotation($httpMethod,$annotation);
-               // break;
+                $return[] = $parseAnnotation($httpMethod, $annotation);
+                // break;
             }
             if ($annotation instanceof \ProAI\Annotations\Annotations\Delete) {
                 $httpMethod = 'DELETE';
-                $return[] = $parseAnnotation($httpMethod,$annotation);
+                $return[] = $parseAnnotation($httpMethod, $annotation);
                 //break;
             }
             if ($annotation instanceof \ProAI\Annotations\Annotations\Any) {
                 $httpMethod = 'ANY';
-                $return[] = $parseAnnotation($httpMethod,$annotation);
+                $return[] = $parseAnnotation($httpMethod, $annotation);
                 //break;
             }
-
         }
 
         return count($return) ? $return : false;

@@ -3,14 +3,14 @@
 namespace ProAI\Annotations\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use ProAI\Annotations\Console\EventClearCommand;
+use ProAI\Annotations\Console\EventScanCommand;
+use ProAI\Annotations\Console\RouteClearCommand;
+use ProAI\Annotations\Console\RouteScanCommand;
+use ProAI\Annotations\Events\Generator as EventGenerator;
+use ProAI\Annotations\Metadata\EventScanner;
 use ProAI\Annotations\Metadata\RouteScanner;
 use ProAI\Annotations\Routing\Generator as RouteGenerator;
-use ProAI\Annotations\Metadata\EventScanner;
-use ProAI\Annotations\Events\Generator as EventGenerator;
-use ProAI\Annotations\Console\RouteScanCommand;
-use ProAI\Annotations\Console\RouteClearCommand;
-use ProAI\Annotations\Console\EventScanCommand;
-use ProAI\Annotations\Console\EventClearCommand;
 
 class CommandsServiceProvider extends ServiceProvider
 {
@@ -109,10 +109,10 @@ class CommandsServiceProvider extends ServiceProvider
     protected function registerCommands()
     {
         // create singletons of each command
-        $commands = array('RouteScan', 'RouteClear', 'EventScan', 'EventClear');
+        $commands = ['RouteScan', 'RouteClear', 'EventScan', 'EventClear'];
 
         foreach ($commands as $command) {
-            $this->{'register'.$command.'Command'}();
+            $this->{'register' . $command . 'Command'}();
         }
 
         // register commands

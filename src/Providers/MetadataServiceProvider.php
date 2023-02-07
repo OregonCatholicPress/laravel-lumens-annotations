@@ -2,10 +2,10 @@
 
 namespace ProAI\Annotations\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use ProAI\Annotations\Metadata\ClassFinder;
-use ProAI\Annotations\Filesystem\ClassFinder as FilesystemClassFinder;
 use Doctrine\Common\Annotations\AnnotationReader;
+use Illuminate\Support\ServiceProvider;
+use ProAI\Annotations\Filesystem\ClassFinder as FilesystemClassFinder;
+use ProAI\Annotations\Metadata\ClassFinder;
 
 class MetadataServiceProvider extends ServiceProvider
 {
@@ -32,7 +32,7 @@ class MetadataServiceProvider extends ServiceProvider
     protected function registerAnnotationReader(): void
     {
         $this->app->singleton('annotations.annotationreader', function ($app) {
-            return new AnnotationReader;
+            return new AnnotationReader();
         });
     }
 
@@ -44,7 +44,7 @@ class MetadataServiceProvider extends ServiceProvider
     protected function registerClassFinder(): void
     {
         $this->app->singleton('annotations.classfinder', function ($app) {
-            $finder = new FilesystemClassFinder;
+            $finder = new FilesystemClassFinder();
 
             return new ClassFinder($finder);
         });

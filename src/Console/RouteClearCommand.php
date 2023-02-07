@@ -32,6 +32,7 @@ class RouteClearCommand extends Command
      * Create a new migration install command instance.
      *
      * @param \ProAI\Annotations\Routing\Generator $generator
+     *
      * @return void
      */
     public function __construct(Generator $generator)
@@ -55,8 +56,7 @@ class RouteClearCommand extends Command
     }
 
      public function handle()
-    {
-      $this->fire();
-    }
-
+     {
+         $this->fire();
+     }
 }

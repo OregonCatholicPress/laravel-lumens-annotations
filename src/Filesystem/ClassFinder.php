@@ -1,4 +1,5 @@
 <?php
+
 namespace ProAI\Annotations\Filesystem;
 
 use Symfony\Component\Finder\Finder;
@@ -14,8 +15,10 @@ class ClassFinder
         foreach (Finder::create()->in($directory)->name('*.php') as $file) {
             $classes[] = $this->findClass($file->getRealPath());
         }
+
         return array_filter($classes);
     }
+
     /**
      * Extract the class name from the file at the given path.
      */
@@ -27,12 +30,13 @@ class ClassFinder
             if ($this->tokenIsNamespace($token)) {
                 $namespace = $this->getNamespace($key + 2, $tokens);
             } elseif ($this->tokenIsClassOrInterface($token)) {
-                return ltrim($namespace.'\\'.$this->getClass($key + 2, $tokens), '\\');
+                return ltrim($namespace . '\\' . $this->getClass($key + 2, $tokens), '\\');
             }
         }
 
         return null;
     }
+
     /**
      * Find the namespace in the tokens starting at a given key.
      */
@@ -40,6 +44,7 @@ class ClassFinder
     {
         $namespace = null;
         $tokenCount = count($tokens);
+
         for ($i = $key; $i < $tokenCount; $i++) {
             if ($this->isPartOfNamespace($tokens[$i])) {
                 $namespace .= $tokens[$i][1];
@@ -50,6 +55,7 @@ class ClassFinder
 
         return null;
     }
+
     /**
      * Find the class in the tokens starting at a given key.
      */
@@ -57,6 +63,7 @@ class ClassFinder
     {
         $class = null;
         $tokenCount = count($tokens);
+
         for ($i = $key; $i < $tokenCount; $i++) {
             if ($this->isPartOfClass($tokens[$i])) {
                 $class .= $tokens[$i][1];
@@ -67,6 +74,7 @@ class ClassFinder
 
         return null;
     }
+
     /**
      * Determine if the given token is a namespace keyword.
      */
@@ -74,6 +82,7 @@ class ClassFinder
     {
         return is_array($token) && $token[0] == T_NAMESPACE;
     }
+
     /**
      * Determine if the given token is a class or interface keyword.
      */
@@ -81,6 +90,7 @@ class ClassFinder
     {
         return is_array($token) && ($token[0] == T_CLASS || $token[0] == T_INTERFACE);
     }
+
     /**
      * Determine if the given token is part of the namespace.
      */
@@ -89,6 +99,7 @@ class ClassFinder
         /** @see https://www.php.net/manual/en/migration80.incompatible.php#migration80.incompatible.tokenizer */
         return is_array($token) && ($token[0] == T_NAME_QUALIFIED || $token[0] == T_NS_SEPARATOR);
     }
+
     /**
      * Determine if the given token is part of the class.
      */
@@ -96,6 +107,7 @@ class ClassFinder
     {
         return is_array($token) && $token[0] == T_STRING;
     }
+
     /**
      * Determine if the given token is whitespace.
      */

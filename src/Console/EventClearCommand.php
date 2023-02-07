@@ -32,6 +32,7 @@ class EventClearCommand extends Command
      * Create a new migration install command instance.
      *
      * @param \ProAI\Annotations\Events\Generator $generator
+     *
      * @return void
      */
     public function __construct(Generator $generator)
@@ -53,9 +54,9 @@ class EventClearCommand extends Command
 
         $this->info('Events cleared successfully!');
     }
-  
+
     public function handle()
     {
-      $this->fire();
+        $this->fire();
     }
 }

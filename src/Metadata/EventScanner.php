@@ -57,7 +57,7 @@ class EventScanner
             $class = $annotation->value;
 
             if (isset($this->config['events_namespace']) && substr($class, 0, strlen($this->config['events_namespace'])) != $this->config['events_namespace']) {
-                $class = $this->config['events_namespace'].'\\'.$class;
+                $class = $this->config['events_namespace'] . '\\' . $class;
             }
 
             return $class;

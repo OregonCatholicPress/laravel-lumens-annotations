@@ -78,6 +78,6 @@ class RouteScanCommand extends Command
      */
     public function handle(): void
     {
-      $this->fire();
+        $this->fire();
     }
 }

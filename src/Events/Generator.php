@@ -31,8 +31,10 @@ class Generator
      * Constructor.
      *
      * @param \Illuminate\Filesystem\Filesystem $files
-     * @param string $path
-     * @param string $file
+     * @param string                            $path
+     * @param string                            $file
+     * @param mixed                             $eventsFile
+     *
      * @return void
      */
     public function __construct(Filesystem $files, $path, $eventsFile)
@@ -45,8 +47,9 @@ class Generator
     /**
      * Generate routes from metadata and save to file.
      *
-     * @param array $metadata
+     * @param array   $metadata
      * @param boolean $saveMode
+     *
      * @return void
      */
     public function generate($metadata)
@@ -79,16 +82,17 @@ class Generator
      * Generate events from metadata.
      *
      * @param array $metadata
+     *
      * @return void
      */
     public function generateEvents($metadata)
     {
         $contents = '<?php' . PHP_EOL . PHP_EOL . 'return [' . PHP_EOL;
 
-        foreach($metadata as $event => $eventHandlers) {
+        foreach ($metadata as $event => $eventHandlers) {
             $contents .= "    '" . $event . "' => [" . PHP_EOL;
 
-            foreach($eventHandlers as $eventHandler) {
+            foreach ($eventHandlers as $eventHandler) {
                 $contents .= "        '" . $eventHandler . "'," . PHP_EOL;
             }
 

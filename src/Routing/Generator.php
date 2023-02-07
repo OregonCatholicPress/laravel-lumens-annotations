@@ -64,53 +64,52 @@ class Generator
         $contents .= '$app = app(); ' . PHP_EOL;
         $contents .= '$router = $app->router; ' . PHP_EOL;
 
-        foreach($metadata as $name => $controllerMetadata) {
+        foreach ($metadata as $name => $controllerMetadata) {
             $contents .= PHP_EOL . "// Routes in controller '" . $name . "'" . PHP_EOL;
 
-            foreach($controllerMetadata as $routeMetadata) {
+            foreach ($controllerMetadata as $routeMetadata) {
                 $options = [];
 
                 // as option
                 if (! empty($routeMetadata['as'])) {
-                    $options[] = "'as' => '".$routeMetadata['as']."'";
+                    $options[] = "'as' => '" . $routeMetadata['as'] . "'";
                 }
 
                 // middleware option
                 if (! empty($routeMetadata['middleware'])) {
                     if (is_array($routeMetadata['middleware'])) {
                         $flat = $this::arrayFlatten($routeMetadata['middleware']);
-                        $middleware = "['".implode("', '",$flat)."']";
+                        $middleware = "['" . implode("', '", $flat) . "']";
                     } else {
-                        $middleware = "'".$routeMetadata['middleware']."'";
+                        $middleware = "'" . $routeMetadata['middleware'] . "'";
                     }
-                    $options[] = "'middleware' => ".$middleware;
+                    $options[] = "'middleware' => " . $middleware;
                 }
 
                 // uses option
-                $options[] = "'uses' => '".$routeMetadata['controller']."@".$routeMetadata['controllerMethod']."'";
+                $options[] = "'uses' => '" . $routeMetadata['controller'] . "@" . $routeMetadata['controllerMethod'] . "'";
 
-                $contents .= "\$router"."->".strtolower($routeMetadata['httpMethod'])."('".$routeMetadata['uri']."', [".implode(", ", $options)."]);" . PHP_EOL;
+                $contents .= "\$router" . "->" . strtolower($routeMetadata['httpMethod']) . "('" . $routeMetadata['uri'] . "', [" . implode(", ", $options) . "]);" . PHP_EOL;
             }
         }
-
 
         return $contents;
     }
 
-    function arrayFlatten($array)
+    public function arrayFlatten($array)
     {
-        if (!is_array($array)) { 
-            return false; 
-        } 
-        $result = array(); 
-        foreach ($array as $key => $value) { 
-            if (is_array($value)) { 
+        if (!is_array($array)) {
+            return false;
+        }
+        $result = [];
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
                 $result = array_merge($result, $this::arrayFlatten($value));
-            } else { 
-                $result = array_merge($result, array($key => $value));
-            } 
+            } else {
+                $result = array_merge($result, [$key => $value]);
+            }
         }
 
-        return $result; 
+        return $result;
     }
 }

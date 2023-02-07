@@ -4,6 +4,7 @@ namespace ProAI\Annotations\Annotations;
 
 /**
  * @Annotation
+ *
  * @Target("CLASS")
  */
 final class Resource implements Annotation
