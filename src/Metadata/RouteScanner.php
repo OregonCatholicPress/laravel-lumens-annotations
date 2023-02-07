@@ -10,16 +10,11 @@ class RouteScanner
 {
     /**
      * The annotation reader instance.
-     *
-     * @var \Doctrine\Common\Annotations\AnnotationReader
      */
-    protected $reader;
+    protected AnnotationReader $reader;
 
     /**
      * Create a new metadata builder instance.
-     *
-     * @param \Doctrine\Common\Annotations\AnnotationReader $reader
-     * @return void
      */
     public function __construct(AnnotationReader $reader)
     {
@@ -30,11 +25,8 @@ class RouteScanner
 
     /**
      * Build metadata from all entity classes.
-     *
-     * @param array $classes
-     * @return array
      */
-    public function scan($classes)
+    public function scan(array $classes): array
     {
         $metadata = [];
 
@@ -51,29 +43,23 @@ class RouteScanner
 
     /**
      * Parse a class.
-     *
-     * @param string $class
-     * @return array|null
      */
-    public function parseClass($class)
+    public function parseClass(string $class): ?array
     {
         $reflectionClass = new ReflectionClass($class);
 
         // check if class is controller
         if ($annotation = $this->reader->getClassAnnotation($reflectionClass, '\ProAI\Annotations\Annotations\Controller')) {
             return $this->parseController($class);
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
      * Parse a controller class.
-     *
-     * @param string $class
-     * @return array
      */
-    public function parseController($class)
+    public function parseController(string $class): array
     {
         $reflectionClass = new ReflectionClass($class);
         $classAnnotations = $this->reader->getClassAnnotations($reflectionClass);
@@ -184,11 +170,8 @@ class RouteScanner
 
     /**
      * Get resource http method.
-     *
-     * @param string $method
-     * @return string
      */
-    protected function getResourceHttpMethod($method)
+    protected function getResourceHttpMethod(string $method): string
     {
         $resourceHttpMethods = [
             'index' => 'GET',
@@ -205,11 +188,8 @@ class RouteScanner
 
     /**
      * Get resource path.
-     *
-     * @param string $method
-     * @return string
      */
-    protected function getResourcePath($method, $name)
+    protected function getResourcePath(string $method, string $name): ?string
     {
         $name = preg_replace('/.*\/([^\/]*)$/', '$1', $name);
         $name = Str::singular($name);
@@ -230,12 +210,8 @@ class RouteScanner
 
     /**
      * Check for http method.
-     *
-     * @param string $name
-     * @param array $methodAnnotations
-     * @return string
      */
-    protected function hasHttpMethodAnnotation($name, $methodAnnotations)
+    protected function hasHttpMethodAnnotation(string $name, array $methodAnnotations): array|bool
     {
 
         $parseAnnotation = function ($httpMethod,$annotation){
@@ -296,10 +272,6 @@ class RouteScanner
 
         }
 
-        if(count($return) > 0){
-          return $return;
-        } else {
-          return false;
-        }
+        return count($return) ? $return : false;
     }
 }
