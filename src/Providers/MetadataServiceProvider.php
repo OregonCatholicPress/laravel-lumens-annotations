@@ -26,6 +26,8 @@ class MetadataServiceProvider extends ServiceProvider
 
     /**
      * Register the class finder implementation.
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     protected function registerAnnotationReader(): void
     {
@@ -36,6 +38,8 @@ class MetadataServiceProvider extends ServiceProvider
 
     /**
      * Register the class finder implementation.
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     protected function registerClassFinder(): void
     {

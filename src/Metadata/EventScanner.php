@@ -9,26 +9,18 @@ class EventScanner
 {
     /**
      * The annotation reader instance.
-     *
-     * @var \Doctrine\Common\Annotations\AnnotationReader
      */
-    protected $reader;
+    protected AnnotationReader $reader;
 
     /**
      * The config of the event annotations package.
-     *
-     * @var array
      */
-    protected $config;
+    protected array $config;
 
     /**
      * Create a new metadata builder instance.
-     *
-     * @param \Doctrine\Common\Annotations\AnnotationReader $reader
-     * @param array $config
-     * @return void
      */
-    public function __construct(AnnotationReader $reader, $config)
+    public function __construct(AnnotationReader $reader, array $config)
     {
         $this->reader = $reader;
         $this->config = $config;
@@ -36,19 +28,16 @@ class EventScanner
 
     /**
      * Build metadata from all entity classes.
-     *
-     * @param array $classes
-     * @return array
      */
-    public function scan($classes)
+    public function scan(array $classes): array
     {
         $metadata = [];
 
         foreach ($classes as $class) {
-            $eventListenerMetadata = $this->parseClass($class);
+            $eventListenMetadata = $this->parseClass($class);
 
-            if ($eventListenerMetadata) {
-                $metadata[$eventListenerMetadata][] = $class;
+            if ($eventListenMetadata) {
+                $metadata[$eventListenMetadata][] = $class;
             }
         }
 
@@ -56,17 +45,15 @@ class EventScanner
     }
 
     /**
-     * Parse a class.
-     *
-     * @param string $class
-     * @return array|null
+     * Parse a class
      */
-    public function parseClass($class)
+    public function parseClass(string $class): ?array
     {
         $reflectionClass = new ReflectionClass($class);
 
         // check if class is controller
-        if ($annotation = $this->reader->getClassAnnotation($reflectionClass, '\ProAI\Annotations\Annotations\Hears')) {
+        $annotation = $this->reader->getClassAnnotation($reflectionClass, '\ProAI\Annotations\Annotations\Hears');
+        if ($annotation) {
             $class = $annotation->value;
 
             if (isset($this->config['events_namespace']) && substr($class, 0, strlen($this->config['events_namespace'])) != $this->config['events_namespace']) {
@@ -74,8 +61,8 @@ class EventScanner
             }
 
             return $class;
-        } else {
-            return null;
         }
+
+        return null;
     }
 }
