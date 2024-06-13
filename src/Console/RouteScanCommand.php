@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use ProAI\Annotations\Metadata\ClassFinder;
 use ProAI\Annotations\Metadata\RouteScanner;
 use ProAI\Annotations\Routing\Generator;
+use Throwable;
 
 class RouteScanCommand extends Command
 {
@@ -77,14 +78,18 @@ class RouteScanCommand extends Command
      */
     public function fire()
     {
-        // get classes
-        $classes = $this->finder->getClassesFromNamespace($this->config['routes_namespace']);
+        try {
+            // get classes
+            $classes = $this->finder->getClassesFromNamespace($this->config['routes_namespace']);
 
-        // build metadata
-        $routes = $this->scanner->scan($classes);
+            // build metadata
+            $routes = $this->scanner->scan($classes);
 
-        // generate routes.php file for scanned routes
-        $this->generator->generate($routes);
+            // generate routes.php file for scanned routes
+            $this->generator->generate($routes);
+        } catch (Throwable $e) {
+            dd($e);
+        }
 
         $this->info('Routes registered successfully!');
     }
