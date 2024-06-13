@@ -90,8 +90,8 @@ class EventScanCommand extends Command
         $this->info('Events registered successfully!');
     }
 
-  public function handle()
-  {
-      $this->fire();
-  }
+    public function handle()
+    {
+        $this->fire();
+    }
 }
