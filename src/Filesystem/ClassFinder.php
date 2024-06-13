@@ -95,13 +95,15 @@ class ClassFinder
     /**
      * Determine if the given token is a double-colon separator between Class & static var/constant/method.
      *
-     * @param  array|string  $token
+     * @param array|string $token
+     *
      * @return bool
      */
     protected function tokenIsDoubleColon($token)
     {
         return is_array($token) && T_DOUBLE_COLON == $token[0];
     }
+
     /**
      * Determine if the given token is part of the namespace.
      */

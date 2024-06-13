@@ -242,7 +242,7 @@ class RouteScanner
             if ($annotation instanceof \ProAI\Annotations\Annotations\Get) {
                 $httpMethod = 'GET';
                 $return[] = $parseAnnotation($httpMethod, $annotation);
-           //     break;
+                //     break;
             }
             if ($annotation instanceof \ProAI\Annotations\Annotations\Post) {
                 $httpMethod = 'POST';
