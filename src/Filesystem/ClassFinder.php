@@ -29,7 +29,8 @@ class ClassFinder
         foreach ($tokens as $key => $token) {
             if ($this->tokenIsNamespace($token)) {
                 $namespace = $this->getNamespace($key + 2, $tokens);
-            } elseif ($this->tokenIsClassOrInterface($token)) {
+            } elseif ($this->tokenIsClassOrInterface($token) && !$this->tokenIsDoubleColon($tokens[$key-1])) {
+                // We want to notice the class/interface DEFINITION, we don't want to be distracted by Classname::class in a PHP Attribute.
                 return ltrim($namespace . '\\' . $this->getClass($key + 2, $tokens), '\\');
             }
         }
@@ -91,6 +92,16 @@ class ClassFinder
         return is_array($token) && ($token[0] == T_CLASS || $token[0] == T_INTERFACE);
     }
 
+    /**
+     * Determine if the given token is a double-colon separator between Class & static var/constant/method.
+     *
+     * @param  array|string  $token
+     * @return bool
+     */
+    protected function tokenIsDoubleColon($token)
+    {
+        return is_array($token) && T_DOUBLE_COLON == $token[0];
+    }
     /**
      * Determine if the given token is part of the namespace.
      */
