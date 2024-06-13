@@ -2,70 +2,49 @@
 
 namespace ProAI\Annotations\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use ProAI\Annotations\Metadata\ClassFinder;
-use ProAI\Annotations\Filesystem\ClassFinder as FilesystemClassFinder;
-use ProAI\Annotations\Metadata\AnnotationLoader;
 use Doctrine\Common\Annotations\AnnotationReader;
+use Illuminate\Support\ServiceProvider;
+use ProAI\Annotations\Filesystem\ClassFinder as FilesystemClassFinder;
+use ProAI\Annotations\Metadata\ClassFinder;
 
 class MetadataServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
      */
-    protected $defer = true;
+    protected bool $defer = true;
 
     /**
      * Register the application services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
-        $this->registerAnnotations();
-
         $this->registerAnnotationReader();
 
         $this->registerClassFinder();
     }
 
     /**
-     * Registers all annotation classes
-     *
-     * @return void
-     */
-    public function registerAnnotations()
-    {
-        $app = $this->app;
-
-        $loader = new AnnotationLoader($app['files'], __DIR__ . '/../Annotations');
-
-        $loader->registerAll();
-    }
-
-    /**
      * Register the class finder implementation.
      *
-     * @return void
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    protected function registerAnnotationReader()
+    protected function registerAnnotationReader(): void
     {
         $this->app->singleton('annotations.annotationreader', function ($app) {
-            return new AnnotationReader;
+            return new AnnotationReader();
         });
     }
 
     /**
      * Register the class finder implementation.
      *
-     * @return void
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    protected function registerClassFinder()
+    protected function registerClassFinder(): void
     {
         $this->app->singleton('annotations.classfinder', function ($app) {
-            $finder = new FilesystemClassFinder;
+            $finder = new FilesystemClassFinder();
 
             return new ClassFinder($finder);
         });
@@ -73,10 +52,8 @@ class MetadataServiceProvider extends ServiceProvider
 
     /**
      * Get the services provided by the provider.
-     *
-     * @return array
      */
-    public function provides()
+    public function provides(): array
     {
         return [
             'annotations.classfinder',

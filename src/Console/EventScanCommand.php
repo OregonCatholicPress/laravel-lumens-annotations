@@ -3,9 +3,9 @@
 namespace ProAI\Annotations\Console;
 
 use Illuminate\Console\Command;
+use ProAI\Annotations\Events\Generator;
 use ProAI\Annotations\Metadata\ClassFinder;
 use ProAI\Annotations\Metadata\EventScanner;
-use ProAI\Annotations\Events\Generator;
 
 class EventScanCommand extends Command
 {
@@ -54,10 +54,11 @@ class EventScanCommand extends Command
     /**
      * Create a new migration install command instance.
      *
-     * @param \ProAI\Annotations\Metadata\ClassFinder $finder
+     * @param \ProAI\Annotations\Metadata\ClassFinder  $finder
      * @param \ProAI\Annotations\Metadata\EventScanner $scanner
-     * @param \ProAI\Annotations\Events\Generator $generator
-     * @param array $config
+     * @param \ProAI\Annotations\Events\Generator      $generator
+     * @param array                                    $config
+     *
      * @return void
      */
     public function __construct(ClassFinder $finder, EventScanner $scanner, Generator $generator, $config)
@@ -90,7 +91,7 @@ class EventScanCommand extends Command
     }
 
   public function handle()
-    {
+  {
       $this->fire();
-    }
+  }
 }

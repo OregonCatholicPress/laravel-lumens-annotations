@@ -8,34 +8,20 @@ class Generator
 {
     /**
      * The filesystem instance.
-     *
-     * @var \Illuminate\Filesystem\Filesystem
      */
-    protected $files;
+    protected Filesystem $files;
 
     /**
      * Path to routes storage directory.
-     *
-     * @var array
      */
-    protected $path;
+    protected string $path;
 
     /**
      * path to routes.php file.
-     *
-     * @var array
      */
-    protected $routesFile;
+    protected string $routesFile;
 
-    /**
-     * Constructor.
-     *
-     * @param \Illuminate\Filesystem\Filesystem $files
-     * @param string $path
-     * @param string $file
-     * @return void
-     */
-    public function __construct(Filesystem $files, $path, $routesFile)
+    public function __construct(Filesystem $files, string $path, string $routesFile)
     {
         $this->files = $files;
         $this->path = $path;
@@ -44,12 +30,8 @@ class Generator
 
     /**
      * Generate routes from metadata and save to file.
-     *
-     * @param array $metadata
-     * @param boolean $saveMode
-     * @return void
      */
-    public function generate($metadata)
+    public function generate(array $metadata): void
     {
         // clean or make (if not exists) model storage directory
         if (! $this->files->exists($this->path)) {
@@ -65,10 +47,8 @@ class Generator
 
     /**
      * Clean model directory.
-     *
-     * @return void
      */
-    public function clean()
+    public function clean(): void
     {
         if ($this->files->exists($this->routesFile)) {
             $this->files->delete($this->routesFile);
@@ -77,64 +57,59 @@ class Generator
 
     /**
      * Generate routes from metadata.
-     *
-     * @param array $metadata
-     * @return void
      */
-    public function generateRoutes($metadata)
+    public function generateRoutes(array $metadata): string
     {
         $contents = '<?php' . PHP_EOL;
         $contents .= '$app = app(); ' . PHP_EOL;
         $contents .= '$router = $app->router; ' . PHP_EOL;
 
-        $routes = [];
-
-        foreach($metadata as $name => $controllerMetadata) {
+        foreach ($metadata as $name => $controllerMetadata) {
             $contents .= PHP_EOL . "// Routes in controller '" . $name . "'" . PHP_EOL;
 
-            foreach($controllerMetadata as $routeMetadata) {
+            foreach ($controllerMetadata as $routeMetadata) {
                 $options = [];
 
                 // as option
                 if (! empty($routeMetadata['as'])) {
-                    $options[] = "'as' => '".$routeMetadata['as']."'";
+                    $options[] = "'as' => '" . $routeMetadata['as'] . "'";
                 }
 
                 // middleware option
                 if (! empty($routeMetadata['middleware'])) {
                     if (is_array($routeMetadata['middleware'])) {
-                        $flat = $this::array_flatten($routeMetadata['middleware']);
-                        $middleware = "['".implode("', '",$flat)."']";
+                        $flat = $this::arrayFlatten($routeMetadata['middleware']);
+                        $middleware = "['" . implode("', '", $flat) . "']";
                     } else {
-                        $middleware = "'".$routeMetadata['middleware']."'";
+                        $middleware = "'" . $routeMetadata['middleware'] . "'";
                     }
-                    $options[] = "'middleware' => ".$middleware;
+                    $options[] = "'middleware' => " . $middleware;
                 }
 
                 // uses option
-                $options[] = "'uses' => '".$routeMetadata['controller']."@".$routeMetadata['controllerMethod']."'";
+                $options[] = "'uses' => '" . $routeMetadata['controller'] . "@" . $routeMetadata['controllerMethod'] . "'";
 
-                $contents .= "\$router"."->".strtolower($routeMetadata['httpMethod'])."('".$routeMetadata['uri']."', [".implode(", ", $options)."]);" . PHP_EOL;
+                $contents .= "\$router" . "->" . strtolower($routeMetadata['httpMethod']) . "('" . $routeMetadata['uri'] . "', [" . implode(", ", $options) . "]);" . PHP_EOL;
             }
         }
-
 
         return $contents;
     }
 
-    function array_flatten($array) { 
-        if (!is_array($array)) { 
-            return false; 
-        } 
-        $result = array(); 
-        foreach ($array as $key => $value) { 
-            if (is_array($value)) { 
-                $result = array_merge($result, $this::array_flatten($value)); 
-            } else { 
-                $result = array_merge($result, array($key => $value));
-            } 
-        } 
-        return $result; 
-    }
+    public function arrayFlatten($array)
+    {
+        if (!is_array($array)) {
+            return false;
+        }
+        $result = [];
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $result = array_merge($result, $this::arrayFlatten($value));
+            } else {
+                $result = array_merge($result, [$key => $value]);
+            }
+        }
 
+        return $result;
+    }
 }

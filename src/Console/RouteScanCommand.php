@@ -26,42 +26,28 @@ class RouteScanCommand extends Command
 
     /**
      * The class finder instance.
-     *
-     * @var \ProAI\Annotations\Metadata\ClassFinder
      */
-    protected $finder;
+    protected ClassFinder $finder;
 
     /**
      * The route scanner instance.
-     *
-     * @var \ProAI\Annotations\Metadata\RouteScanner
      */
-    protected $scanner;
+    protected RouteScanner $scanner;
 
     /**
      * The routes generator instance.
-     *
-     * @var \ProAI\Annotations\Routing\Generator
      */
-    protected $generator;
+    protected Generator $generator;
 
     /**
      * The config of the route annotations package.
-     *
-     * @var array
      */
-    protected $config;
+    protected array $config;
 
     /**
      * Create a new migration install command instance.
-     *
-     * @param \ProAI\Annotations\Metadata\ClassFinder $finder
-     * @param \ProAI\Annotations\Metadata\RouteScanner $scanner
-     * @param \ProAI\Annotations\Routing\Generator $generator
-     * @param array $config
-     * @return void
      */
-    public function __construct(ClassFinder $finder, RouteScanner $scanner, Generator $generator, $config)
+    public function __construct(ClassFinder $finder, RouteScanner $scanner, Generator $generator, array $config)
     {
         parent::__construct();
 
@@ -73,10 +59,8 @@ class RouteScanCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
-    public function fire()
+    public function fire(): void
     {
         try {
             // get classes
@@ -94,9 +78,11 @@ class RouteScanCommand extends Command
         $this->info('Routes registered successfully!');
     }
 
-    public function handle()
+    /**
+     * Catch the artisan call
+     */
+    public function handle(): void
     {
-      $this->fire();
+        $this->fire();
     }
-    
 }

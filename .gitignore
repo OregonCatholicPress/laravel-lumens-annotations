@@ -1,40 +1,23 @@
-# composer files
 /vendor
-# files set to ignore
-x-ignore-*
-phpunit.xml
+/.idea
+Homestead.json
+Homestead.yaml
+.env
+bootstrap/cache/*
+storage/*
+vendor/*
+/temp
+/tmp
+/public/tmp
+/.sass-cache
+Homestead.yaml
+.env
+.env.testing
+.env.dragon
+.env.stage
+.php-cs-fixer.cache
 
-# https://gist.github.com/octocat/9257657
-
-# Compiled source #
-###################
-*.com
-*.class
-*.dll
-*.exe
-*.o
-*.so
-
-# Packages #
-############
-# it's better to unpack these files and commit the raw source
-# git has its own built in compression methods
-*.7z
-*.dmg
-*.gz
-*.iso
-*.jar
-*.rar
-*.tar
-*.zip
-
-# Logs and databases #
-######################
-*.log
-*.sql
-*.sqlite
-
-# OS/App generated files #
+# OS generated files #
 ######################
 .DS_Store
 .DS_Store?
@@ -49,7 +32,11 @@ Thumbs.db
 .sub*.tmp
 screenlog.*
 nbproject/
-.sass-cache
-.phpunit.result.cache
-.php-cs-fixer.cache
-_build/
+
+#=======
+# OTHER
+*.old
+*.bkp
+
+# Compressed Files
+*.zip

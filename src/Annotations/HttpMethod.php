@@ -2,17 +2,14 @@
 
 namespace ProAI\Annotations\Annotations;
 
+/**
+ * @SuppressWarnings(PHPMD.ShortVariableName)
+ */
 abstract class HttpMethod
 {
-    /**
-     * @var string
-     */
-    public $value;
+    public string $value;
 
-    /**
-     * @var string
-     */
-    public $as;
+    public string $as;
 
     /**
      * @var mixed

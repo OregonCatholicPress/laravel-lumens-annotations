@@ -11,7 +11,7 @@ return [
     | `php artisan route:scan` command.
     |
     */
-    
+
     'routes_namespace' => 'App\Http\Controllers',
 
     /*
@@ -23,7 +23,7 @@ return [
     | `php artisan event:scan` command.
     |
     */
-    
+
     'events_namespace' => 'App\Http\Handlers\Events',
 
     /*
@@ -36,7 +36,7 @@ return [
     | option is useful in development mode.
     |
     */
-    
+
     'auto_scan' => env('APP_AUTO_SCAN', false),
 
 ];
