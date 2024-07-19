@@ -31,9 +31,7 @@ class MetadataServiceProvider extends ServiceProvider
      */
     protected function registerAnnotationReader(): void
     {
-        $this->app->singleton('annotations.annotationreader', function ($app) {
-            return new AnnotationReader();
-        });
+        $this->app->singleton('annotations.annotationreader', fn ($app) => new AnnotationReader());
     }
 
     /**
