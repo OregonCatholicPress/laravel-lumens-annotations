@@ -14,11 +14,12 @@ class Generator
     public function __construct(/**
      * The filesystem instance.
      */
-    protected Filesystem $files, /**
+        protected Filesystem $files, /**
      * Path to routes storage directory.
      */
-    protected string $path, string $routesFile)
-    {
+        protected string $path,
+        string $routesFile
+    ) {
         $this->routesFile = $this->path . '/' . $routesFile;
     }
 

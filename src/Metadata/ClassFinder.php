@@ -19,8 +19,7 @@ class ClassFinder
          * The class finder instance.
          */
         protected FilesystemClassFinder $finder
-    )
-    {
+    ) {
     }
 
     /**

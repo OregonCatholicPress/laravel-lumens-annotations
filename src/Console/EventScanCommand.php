@@ -57,7 +57,7 @@ class EventScanCommand extends Command
     public function __construct(ClassFinder $finder, EventScanner $scanner, Generator $generator, /**
      * The config of the event annotations package.
      */
-    protected $config)
+        protected $config)
     {
         parent::__construct();
 

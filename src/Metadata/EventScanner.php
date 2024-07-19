@@ -19,8 +19,7 @@ class EventScanner
          * The config of the event annotations package.
          */
         protected array $config
-    )
-    {
+    ) {
     }
 
     /**

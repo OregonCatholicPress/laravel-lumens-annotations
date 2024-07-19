@@ -32,7 +32,7 @@ class Generator
     public function __construct(Filesystem $files, /**
      * Path to events storage directory.
      */
-    protected $path, mixed $eventsFile)
+        protected $path, mixed $eventsFile)
     {
         $this->files = $files;
         $this->eventsFile = $this->path . '/' . $eventsFile;

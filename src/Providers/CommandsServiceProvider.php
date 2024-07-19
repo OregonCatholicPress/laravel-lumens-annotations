@@ -131,7 +131,7 @@ class CommandsServiceProvider extends ServiceProvider
      */
     protected function registerRouteScanCommand()
     {
-        $this->app->singleton('command.route.scan', fn($app) => new RouteScanCommand(
+        $this->app->singleton('command.route.scan', fn ($app) => new RouteScanCommand(
             $app['annotations.classfinder'],
             $app['annotations.route.scanner'],
             $app['annotations.route.generator'],
@@ -146,7 +146,7 @@ class CommandsServiceProvider extends ServiceProvider
      */
     protected function registerRouteClearCommand()
     {
-        $this->app->singleton('command.route.clear', fn($app) => new RouteClearCommand(
+        $this->app->singleton('command.route.clear', fn ($app) => new RouteClearCommand(
             $app['annotations.route.generator']
         ));
     }
@@ -158,7 +158,7 @@ class CommandsServiceProvider extends ServiceProvider
      */
     protected function registerEventScanCommand()
     {
-        $this->app->singleton('command.event.scan', fn($app) => new EventScanCommand(
+        $this->app->singleton('command.event.scan', fn ($app) => new EventScanCommand(
             $app['annotations.classfinder'],
             $app['annotations.event.scanner'],
             $app['annotations.event.generator'],
@@ -173,7 +173,7 @@ class CommandsServiceProvider extends ServiceProvider
      */
     protected function registerEventClearCommand()
     {
-        $this->app->singleton('command.event.clear', fn($app) => new EventClearCommand(
+        $this->app->singleton('command.event.clear', fn ($app) => new EventClearCommand(
             $app['annotations.event.generator']
         ));
     }

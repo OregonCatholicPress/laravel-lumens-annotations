@@ -17,8 +17,8 @@ class RouteScanner
     public function __construct(/**
      * The annotation reader instance.
      */
-    protected AnnotationReader $reader)
-    {
+        protected AnnotationReader $reader
+    ) {
         // OA namespace is for swagger annotations. We want to ignore those.
         $this->reader->addGlobalIgnoredNamespace("OA");
     }
@@ -196,7 +196,7 @@ class RouteScanner
     {
         $name = preg_replace('/.*\/([^\/]*)$/', '$1', $name);
         $name = Str::singular($name);
-        $name = preg_replace_callback('/[-_](\w)/', fn($matches) => strtoupper((string) $matches[1]), $name);
+        $name = preg_replace_callback('/[-_](\w)/', fn ($matches) => strtoupper((string) $matches[1]), $name);
         $idd = $name . "Id";
         $resourcePaths = [
             'index' => '',

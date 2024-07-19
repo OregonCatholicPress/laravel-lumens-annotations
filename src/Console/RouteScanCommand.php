@@ -30,17 +30,17 @@ class RouteScanCommand extends Command
     public function __construct(/**
      * The class finder instance.
      */
-    protected ClassFinder $finder, /**
+        protected ClassFinder $finder, /**
      * The route scanner instance.
      */
-    protected RouteScanner $scanner, /**
+        protected RouteScanner $scanner, /**
      * The routes generator instance.
      */
-    protected Generator $generator, /**
+        protected Generator $generator, /**
      * The config of the route annotations package.
      */
-    protected array $config)
-    {
+        protected array $config
+    ) {
         parent::__construct();
     }
 
