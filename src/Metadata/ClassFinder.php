@@ -7,11 +7,6 @@ use ProAI\Annotations\Filesystem\ClassFinder as FilesystemClassFinder;
 class ClassFinder
 {
     /**
-     * The class finder instance.
-     */
-    protected FilesystemClassFinder $finder;
-
-    /**
      * The application namespace.
      */
     protected ?string $namespace = null;
@@ -19,9 +14,13 @@ class ClassFinder
     /**
      * Create a new metadata builder instance.
      */
-    public function __construct(FilesystemClassFinder $finder)
+    public function __construct(
+        /**
+         * The class finder instance.
+         */
+        protected FilesystemClassFinder $finder
+    )
     {
-        $this->finder = $finder;
     }
 
     /**
@@ -44,7 +43,7 @@ class ClassFinder
         // strip app namespace
         $appNamespace = $this->getAppNamespace();
 
-        if (substr($namespace, 0, strlen($appNamespace)) != $appNamespace) {
+        if (!str_starts_with($namespace, $appNamespace)) {
             return null;
         }
 

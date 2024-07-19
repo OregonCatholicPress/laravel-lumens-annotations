@@ -8,22 +8,19 @@ use ReflectionClass;
 class EventScanner
 {
     /**
-     * The annotation reader instance.
-     */
-    protected AnnotationReader $reader;
-
-    /**
-     * The config of the event annotations package.
-     */
-    protected array $config;
-
-    /**
      * Create a new metadata builder instance.
      */
-    public function __construct(AnnotationReader $reader, array $config)
+    public function __construct(
+        /**
+         * The annotation reader instance.
+         */
+        protected AnnotationReader $reader,
+        /**
+         * The config of the event annotations package.
+         */
+        protected array $config
+    )
     {
-        $this->reader = $reader;
-        $this->config = $config;
     }
 
     /**
@@ -52,11 +49,11 @@ class EventScanner
         $reflectionClass = new ReflectionClass($class);
 
         // check if class is controller
-        $annotation = $this->reader->getClassAnnotation($reflectionClass, '\ProAI\Annotations\Annotations\Hears');
+        $annotation = $this->reader->getClassAnnotation($reflectionClass, \ProAI\Annotations\Annotations\Hears::class);
         if ($annotation) {
             $class = $annotation->value;
 
-            if (isset($this->config['events_namespace']) && substr($class, 0, strlen($this->config['events_namespace'])) != $this->config['events_namespace']) {
+            if (isset($this->config['events_namespace']) && !str_starts_with($class, (string) $this->config['events_namespace'])) {
                 $class = $this->config['events_namespace'] . '\\' . $class;
             }
 

@@ -14,13 +14,6 @@ class Generator
     protected $files;
 
     /**
-     * Path to events storage directory.
-     *
-     * @var array
-     */
-    protected $path;
-
-    /**
      * path to events.php file.
      *
      * @var array
@@ -33,14 +26,15 @@ class Generator
      * @param \Illuminate\Filesystem\Filesystem $files
      * @param string                            $path
      * @param string                            $file
-     * @param mixed                             $eventsFile
      *
      * @return void
      */
-    public function __construct(Filesystem $files, $path, $eventsFile)
+    public function __construct(Filesystem $files, /**
+     * Path to events storage directory.
+     */
+    protected $path, mixed $eventsFile)
     {
         $this->files = $files;
-        $this->path = $path;
         $this->eventsFile = $this->path . '/' . $eventsFile;
     }
 

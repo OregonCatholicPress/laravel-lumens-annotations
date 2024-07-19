@@ -7,24 +7,18 @@ use Illuminate\Filesystem\Filesystem;
 class Generator
 {
     /**
-     * The filesystem instance.
-     */
-    protected Filesystem $files;
-
-    /**
-     * Path to routes storage directory.
-     */
-    protected string $path;
-
-    /**
      * path to routes.php file.
      */
     protected string $routesFile;
 
-    public function __construct(Filesystem $files, string $path, string $routesFile)
+    public function __construct(/**
+     * The filesystem instance.
+     */
+    protected Filesystem $files, /**
+     * Path to routes storage directory.
+     */
+    protected string $path, string $routesFile)
     {
-        $this->files = $files;
-        $this->path = $path;
         $this->routesFile = $this->path . '/' . $routesFile;
     }
 
@@ -89,7 +83,7 @@ class Generator
                 // uses option
                 $options[] = "'uses' => '" . $routeMetadata['controller'] . "@" . $routeMetadata['controllerMethod'] . "'";
 
-                $contents .= "\$router" . "->" . strtolower($routeMetadata['httpMethod']) . "('" . $routeMetadata['uri'] . "', [" . implode(", ", $options) . "]);" . PHP_EOL;
+                $contents .= "\$router" . "->" . strtolower((string) $routeMetadata['httpMethod']) . "('" . $routeMetadata['uri'] . "', [" . implode(", ", $options) . "]);" . PHP_EOL;
             }
         }
 
