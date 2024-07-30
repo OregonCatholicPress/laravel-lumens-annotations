@@ -28,7 +28,7 @@ class CommandsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->register(\ProAI\Annotations\Providers\MetadataServiceProvider::class);
+        $this->app->register(MetadataServiceProvider::class);
 
         $this->registerRouteScanner();
 

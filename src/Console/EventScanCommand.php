@@ -26,31 +26,31 @@ class EventScanCommand extends Command
     /**
      * The class finder instance.
      *
-     * @var \ProAI\Annotations\Metadata\ClassFinder
+     * @var ClassFinder
      */
     protected $finder;
 
     /**
      * The event scanner instance.
      *
-     * @var \ProAI\Annotations\Metadata\EventScanner
+     * @var EventScanner
      */
     protected $scanner;
 
     /**
      * The events generator instance.
      *
-     * @var \ProAI\Annotations\Events\Generator
+     * @var Generator
      */
     protected $generator;
 
     /**
      * Create a new migration install command instance.
      *
-     * @param \ProAI\Annotations\Metadata\ClassFinder  $finder
-     * @param \ProAI\Annotations\Metadata\EventScanner $scanner
-     * @param \ProAI\Annotations\Events\Generator      $generator
-     * @param array                                    $config
+     * @param ClassFinder  $finder
+     * @param EventScanner $scanner
+     * @param Generator    $generator
+     * @param array        $config
      *
      * @return void
      */

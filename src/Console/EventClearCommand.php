@@ -24,14 +24,14 @@ class EventClearCommand extends Command
     /**
      * The events generator instance.
      *
-     * @var \ProAI\Annotations\Events\Generator
+     * @var Generator
      */
     protected $generator;
 
     /**
      * Create a new migration install command instance.
      *
-     * @param \ProAI\Annotations\Events\Generator $generator
+     * @param Generator $generator
      *
      * @return void
      */
