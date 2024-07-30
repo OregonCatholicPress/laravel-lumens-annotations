@@ -45,13 +45,6 @@ class EventScanCommand extends Command
     protected $generator;
 
     /**
-     * The config of the event annotations package.
-     *
-     * @var array
-     */
-    protected $config;
-
-    /**
      * Create a new migration install command instance.
      *
      * @param \ProAI\Annotations\Metadata\ClassFinder  $finder
@@ -61,14 +54,16 @@ class EventScanCommand extends Command
      *
      * @return void
      */
-    public function __construct(ClassFinder $finder, EventScanner $scanner, Generator $generator, $config)
+    public function __construct(ClassFinder $finder, EventScanner $scanner, Generator $generator, /**
+     * The config of the event annotations package.
+     */
+        protected $config)
     {
         parent::__construct();
 
         $this->finder = $finder;
         $this->scanner = $scanner;
         $this->generator = $generator;
-        $this->config = $config;
     }
 
     /**
@@ -90,8 +85,8 @@ class EventScanCommand extends Command
         $this->info('Events registered successfully!');
     }
 
-  public function handle()
-  {
-      $this->fire();
-  }
+    public function handle()
+    {
+        $this->fire();
+    }
 }

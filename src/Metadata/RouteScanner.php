@@ -12,16 +12,13 @@ use ReflectionClass;
 class RouteScanner
 {
     /**
-     * The annotation reader instance.
-     */
-    protected AnnotationReader $reader;
-
-    /**
      * Create a new metadata builder instance.
      */
-    public function __construct(AnnotationReader $reader)
-    {
-        $this->reader = $reader;
+    public function __construct(/**
+     * The annotation reader instance.
+     */
+        protected AnnotationReader $reader
+    ) {
         // OA namespace is for swagger annotations. We want to ignore those.
         $this->reader->addGlobalIgnoredNamespace("OA");
     }
@@ -52,7 +49,7 @@ class RouteScanner
         $reflectionClass = new ReflectionClass($class);
 
         // check if class is controller
-        $annotation = $this->reader->getClassAnnotation($reflectionClass, '\ProAI\Annotations\Annotations\Controller');
+        $annotation = $this->reader->getClassAnnotation($reflectionClass, \ProAI\Annotations\Annotations\Controller::class);
         if ($annotation) {
             return $this->parseController($class);
         }
@@ -189,7 +186,7 @@ class RouteScanner
             'destroy' => 'DELETE'
         ];
 
-        return (isset($resourceHttpMethods[$method])) ? $resourceHttpMethods[$method] : null;
+        return $resourceHttpMethods[$method] ?? null;
     }
 
     /**
@@ -199,7 +196,7 @@ class RouteScanner
     {
         $name = preg_replace('/.*\/([^\/]*)$/', '$1', $name);
         $name = Str::singular($name);
-        $name = preg_replace_callback('/[-_](\w)/', function ($matches) { return strtoupper($matches[1]); }, $name);
+        $name = preg_replace_callback('/[-_](\w)/', fn ($matches) => strtoupper((string) $matches[1]), $name);
         $idd = $name . "Id";
         $resourcePaths = [
             'index' => '',
@@ -211,7 +208,7 @@ class RouteScanner
             'destroy' => '/{id}'
         ];
 
-        return (isset($resourcePaths[$method])) ? $resourcePaths[$method] : null;
+        return $resourcePaths[$method] ?? null;
     }
 
     /**
@@ -242,7 +239,7 @@ class RouteScanner
             if ($annotation instanceof \ProAI\Annotations\Annotations\Get) {
                 $httpMethod = 'GET';
                 $return[] = $parseAnnotation($httpMethod, $annotation);
-           //     break;
+                //     break;
             }
             if ($annotation instanceof \ProAI\Annotations\Annotations\Post) {
                 $httpMethod = 'POST';

@@ -4,8 +4,10 @@
     "keywords": ["laravel","lumen","route","routes","router","annotations","event","event binding"],
     "license": "MIT",
     "require": {
-        "php": "^8.1.0",
-        "doctrine/annotations": "^2.0"
+        "php": "^8.2.0 || ^8.3.0",
+        "doctrine/annotations": "^2.0",
+        "illuminate/support": "^10.0",
+        "illuminate/console": "^10.0"
     },
     "autoload": {
         "psr-4": {
@@ -15,20 +17,20 @@
     "scripts": {
         "code-standards": [
             "@syntax-check",
-            "@copy-paste",
             "@mess-detector",
             "@cs-fixer"
         ],
+        "rector": "@php vendor/bin/rector process",
+        "rector-dry-run": "@php vendor/bin/rector process --dry-run",
         "paratest": "@php vendor/bin/paratest -p24 -f",
         "syntax-check": "@php vendor/bin/parallel-lint src",
         "mess-detector": "@php vendor/bin/phpmd src text phpmd.xml",
-        "cs-fixer": "@php vendor/bin/php-cs-fixer fix --dry-run",
-        "copy-paste": "@php vendor/bin/phpcpd --min-tokens=50 src"
+        "cs-fixer": "@php vendor/bin/php-cs-fixer fix --dry-run"
     },
     "require-dev": {
         "phpmd/phpmd": "^2.0",
-        "sebastian/phpcpd": "^6.0",
         "php-parallel-lint/php-parallel-lint": "^1.3.2",
-        "friendsofphp/php-cs-fixer": "^3.11"
+        "friendsofphp/php-cs-fixer": "^3.11",
+        "rector/rector": "^1.0"
     }
 }
