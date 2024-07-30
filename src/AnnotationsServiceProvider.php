@@ -29,7 +29,7 @@ class AnnotationsServiceProvider extends ServiceProvider
     {
         $this->registerConfig();
 
-        $this->app->register(\ProAI\Annotations\Providers\CommandsServiceProvider::class);
+        $this->app->register(Providers\CommandsServiceProvider::class);
     }
 
     /**

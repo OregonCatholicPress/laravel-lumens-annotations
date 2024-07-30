@@ -9,7 +9,7 @@ class Generator
     /**
      * The filesystem instance.
      *
-     * @var \Illuminate\Filesystem\Filesystem
+     * @var Filesystem
      */
     protected $files;
 
@@ -23,9 +23,9 @@ class Generator
     /**
      * Constructor.
      *
-     * @param \Illuminate\Filesystem\Filesystem $files
-     * @param string                            $path
-     * @param string                            $file
+     * @param Filesystem $files
+     * @param string     $path
+     * @param string     $file
      *
      * @return void
      */

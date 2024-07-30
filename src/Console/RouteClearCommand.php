@@ -24,14 +24,14 @@ class RouteClearCommand extends Command
     /**
      * The routes generator instance.
      *
-     * @var \ProAI\Annotations\Routing\Generator
+     * @var Generator
      */
     protected $generator;
 
     /**
      * Create a new migration install command instance.
      *
-     * @param \ProAI\Annotations\Routing\Generator $generator
+     * @param Generator $generator
      *
      * @return void
      */
