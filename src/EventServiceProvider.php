@@ -11,6 +11,7 @@ class EventServiceProvider extends ServiceProvider
      *
      * @return void
      */
+    #[\Override]
     public function register()
     {
         $this->registerEventBindings();

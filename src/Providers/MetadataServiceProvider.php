@@ -17,6 +17,7 @@ class MetadataServiceProvider extends ServiceProvider
     /**
      * Register the application services.
      */
+    #[\Override]
     public function register(): void
     {
         $this->registerAnnotationReader();
@@ -51,6 +52,7 @@ class MetadataServiceProvider extends ServiceProvider
     /**
      * Get the services provided by the provider.
      */
+    #[\Override]
     public function provides(): array
     {
         return [

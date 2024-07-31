@@ -25,6 +25,7 @@ class AnnotationsServiceProvider extends ServiceProvider
      *
      * @return void
      */
+    #[\Override]
     public function register()
     {
         $this->registerConfig();

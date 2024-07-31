@@ -26,6 +26,7 @@ class CommandsServiceProvider extends ServiceProvider
      *
      * @return void
      */
+    #[\Override]
     public function register()
     {
         $this->app->register(MetadataServiceProvider::class);
@@ -183,6 +184,7 @@ class CommandsServiceProvider extends ServiceProvider
      *
      * @return array
      */
+    #[\Override]
     public function provides()
     {
         return [
