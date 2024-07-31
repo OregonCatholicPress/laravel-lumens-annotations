@@ -4,6 +4,7 @@ namespace ProAI\Annotations\Providers;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Illuminate\Support\ServiceProvider;
+use Override;
 use ProAI\Annotations\Filesystem\ClassFinder as FilesystemClassFinder;
 use ProAI\Annotations\Metadata\ClassFinder;
 
@@ -17,7 +18,7 @@ class MetadataServiceProvider extends ServiceProvider
     /**
      * Register the application services.
      */
-    #[\Override]
+    #[Override]
     public function register(): void
     {
         $this->registerAnnotationReader();
@@ -52,7 +53,7 @@ class MetadataServiceProvider extends ServiceProvider
     /**
      * Get the services provided by the provider.
      */
-    #[\Override]
+    #[Override]
     public function provides(): array
     {
         return [

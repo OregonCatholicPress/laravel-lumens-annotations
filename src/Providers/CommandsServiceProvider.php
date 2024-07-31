@@ -3,6 +3,7 @@
 namespace ProAI\Annotations\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Override;
 use ProAI\Annotations\Console\EventClearCommand;
 use ProAI\Annotations\Console\EventScanCommand;
 use ProAI\Annotations\Console\RouteClearCommand;
@@ -26,7 +27,7 @@ class CommandsServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    #[\Override]
+    #[Override]
     public function register()
     {
         $this->app->register(MetadataServiceProvider::class);
@@ -184,7 +185,7 @@ class CommandsServiceProvider extends ServiceProvider
      *
      * @return array
      */
-    #[\Override]
+    #[Override]
     public function provides()
     {
         return [
