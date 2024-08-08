@@ -3,6 +3,7 @@
 namespace ProAI\Annotations;
 
 use Illuminate\Support\ServiceProvider;
+use Override;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -11,6 +12,7 @@ class EventServiceProvider extends ServiceProvider
      *
      * @return void
      */
+    #[Override]
     public function register()
     {
         $this->registerEventBindings();

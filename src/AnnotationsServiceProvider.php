@@ -3,6 +3,7 @@
 namespace ProAI\Annotations;
 
 use Illuminate\Support\ServiceProvider;
+use Override;
 
 class AnnotationsServiceProvider extends ServiceProvider
 {
@@ -25,6 +26,7 @@ class AnnotationsServiceProvider extends ServiceProvider
      *
      * @return void
      */
+    #[Override]
     public function register()
     {
         $this->registerConfig();
