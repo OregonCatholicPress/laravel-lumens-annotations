@@ -1,6 +1,9 @@
 # No longer in use
+
 **If this message is still up in March 2027, this github repository should be DELETED**
+
 OCP upgraded Lumens 11 to Laravel 12 in 2026, this package was replaced by Spatie Laravel-Route-Attributes.
+
 This package was archived in December 2025.
 
 # Lumen Annotations
